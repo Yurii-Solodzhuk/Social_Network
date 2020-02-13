@@ -2,28 +2,37 @@ package com.logos.social_network.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@Table(name = "social_network")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String firstName;
+    @Column(name = "name")
+    private String name;
 
-    private String lastName;
+    @Column(name = "surname")
+    private String surname;
 
-//    private List<Friends> friendsList;
+    @Column(name = "gender")
+    private boolean gender;
+
+//    @Column(name = "friends")
+//    private List<User> friends = new ArrayList<>();
 
 //    private messages;
 
-    private String photo;
+    @Column(name = "avatar")
+    private String avatar;
+
+    @Column(name = "photos")
+    private List<String> photos;
 
 }
