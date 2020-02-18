@@ -24,15 +24,21 @@ public class User {
     @Column(name = "gender")
     private boolean gender;
 
-//    @Column(name = "friends")
-//    private List<User> friends = new ArrayList<>();
+    @Column(name = "friend_requests")
+    private List<User> friendRequests = new ArrayList<>();
+
+    @Column(name = "outcoming_requests")
+    private List<User> outcomingRequests = new ArrayList<>();
+
+    @Column(name = "friends")
+    private List<User> friends = new ArrayList<>();
 
 //    private messages;
 
-    @Column(name = "avatar")
-    private String avatar;
+    @Column(name = "avatar_URL")
+    private String avatarURL;
 
-    @Column(name = "photos")
-    private List<String> photos;
+    @Column(name = "photos_URL")
+    private List<String> photosURL;
 
 }
