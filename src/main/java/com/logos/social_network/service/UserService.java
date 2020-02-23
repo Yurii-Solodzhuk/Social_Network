@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public interface NetworkService {
+public interface UserService {
     List<User> addToFriends(User user);
     void acceptFriend(User user);
     void addAvatar(String avararURL);

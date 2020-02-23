@@ -1,7 +1,8 @@
-package com.logos.social_network.service.networkServiceImpl;
+package com.logos.social_network.service.userServiceImpl;
 
 import com.logos.social_network.entity.User;
 import com.logos.social_network.repository.UserRepository;
+import com.logos.social_network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 
 @Service
-public class NetworkServiceImpl implements com.logos.social_network.service.NetworkService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
