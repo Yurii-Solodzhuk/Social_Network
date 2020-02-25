@@ -24,14 +24,23 @@ public class User {
     @Column(name = "gender")
     private boolean gender;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "friend_requests")
+    @ManyToMany(mappedBy = "outcomingRequests")
     private List<User> friendRequests = new ArrayList<>();
 
     @Column(name = "outcoming_requests")
+    @ManyToMany
     private List<User> outcomingRequests = new ArrayList<>();
 
     @Column(name = "friends")
-    private List<User> friends = new ArrayList<>();
+    @ElementCollection
+    private List<Integer> friendsIds = new ArrayList<>();
 
 //    private messages;
 
@@ -39,6 +48,7 @@ public class User {
     private String avatarURL;
 
     @Column(name = "photos_URL")
+    @ElementCollection
     private List<String> photosURL;
 
 }

@@ -10,4 +10,5 @@ public interface UserService {
     List<User> addToFriends(User user);
     void acceptFriend(User user);
     void addAvatar(String avararURL);
+    User getOne(Integer id);
 }

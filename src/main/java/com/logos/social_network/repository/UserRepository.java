@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findUserById(Integer id);
-    List<User> findAll(List<User> friendRequests);
 }

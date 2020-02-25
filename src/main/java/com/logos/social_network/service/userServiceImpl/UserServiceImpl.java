@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void acceptFriend(User user) {
         List<User> friendRequests = user.getFriendRequests();
-        List<User> friends = user.getFriends();
+        List<User> friends = userRepository.findAllById(user.getFriendsIds());
         if (!friends.contains(user)&&friendRequests.contains(user)){
-            user.getFriends().add(userRepository.save(user));// update myself
+            user.getFriendsIds().add(userRepository.save(user).getId());// update myself
 //            userRepository.save(user);
         }
 
@@ -50,7 +50,10 @@ public class UserServiceImpl implements UserService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public User getOne(Integer id){
+        return userRepository.findUserById(id);
     }
 }
 
