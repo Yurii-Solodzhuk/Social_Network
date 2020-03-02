@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findUserById(Integer id);
+    Integer countByEmailAndPhoneNumber(String email, String phoneNumber);
+    User findByEmail(String email);
 }

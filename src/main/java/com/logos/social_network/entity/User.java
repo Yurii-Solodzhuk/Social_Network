@@ -15,40 +15,49 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Column(name = "gender")
-    private boolean gender;
+//    @Column(name = "gender")
+//    private boolean gender;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "friend_requests")
-    @ManyToMany(mappedBy = "outcomingRequests")
-    private List<User> friendRequests = new ArrayList<>();
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @Column(name = "outcoming_requests")
-    @ManyToMany
-    private List<User> outcomingRequests = new ArrayList<>();
+    @Column(name = "role")
+//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @Column(name = "friends")
-    @ElementCollection
-    private List<Integer> friendsIds = new ArrayList<>();
+//    @Column(name = "friend_requests")
+//    @ManyToMany(mappedBy = "outcomingRequests", fetch = FetchType.LAZY)
+//    private List<User> friendRequests = new ArrayList<>();
+//
+//    @Column(name = "outcoming_requests")
+//    @ManyToMany
+//    private List<User> outcomingRequests = new ArrayList<>();
+//
+//    @Column(name = "friends")
+//    @ElementCollection
+//    private List<Integer> friendsIds = new ArrayList<>();
 
 //    private messages;
 
     @Column(name = "avatar_URL")
     private String avatarURL;
 
-    @Column(name = "photos_URL")
-    @ElementCollection
-    private List<String> photosURL;
+//    @Column(name = "photos_URL")
+//    @ElementCollection
+//    private List<String> photosURL;
 
 }

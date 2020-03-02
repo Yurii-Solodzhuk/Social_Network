@@ -10,6 +10,8 @@
 <h1>Welcome!</h1>
 
 <a href="/main">Main page</a>
+<a href="/login">Sing in</a>
+<a href="/registration">Sing up</a>
 
 </body>
 </html>
