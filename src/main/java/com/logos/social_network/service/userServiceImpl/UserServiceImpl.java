@@ -7,21 +7,16 @@ import com.logos.social_network.repository.UserRepository;
 import com.logos.social_network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 
-@Service("userDetailsService")
+@Service()
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
@@ -77,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setRole(Role.USER);
+        user.setRole(Collections.singleton(Role.USER));
         user.setEmail(userDto.getEmail());
         user.setPhoneNumber(userDto.getPhoneNumber());
 
@@ -97,16 +92,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return true;
     }
 
+
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User byEmail = userRepository.findByEmail(s);
-        ArrayList<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
-        simpleGrantedAuthorities.add(new SimpleGrantedAuthority(byEmail.getRole().toString()));
-        return new org.springframework.security.core.userdetails.User(
-                byEmail.getEmail(),
-                byEmail.getPassword(),
-                simpleGrantedAuthorities
-        );
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        return user;
     }
 }
 

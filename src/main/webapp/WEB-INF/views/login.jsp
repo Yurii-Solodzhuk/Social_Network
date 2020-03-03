@@ -18,7 +18,7 @@
                 <div class="form-group">
                     <label for="email" class="control-label col-sm-2">Email or phone:</label>
                     <div class="col-sm-10">
-                        <input type="text" name="login" id="email" class="form-control" />
+                        <input type="text" name="email" id="email" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
