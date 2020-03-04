@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
-    <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
-<h1>Hello Yana, go nahui!</h1>
-<script src="/js/main.js"></script>
+<h1>Hello </h1>
+
+<a href="/logout">Sing Out</a>
 
 </body>
 </html>

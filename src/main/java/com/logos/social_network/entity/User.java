@@ -55,6 +55,9 @@ public class User implements UserDetails {
 
 //    private messages;
 
+//    @Column(name = "photos_URL")
+//    @ElementCollection
+//    private List<String> photosURL;
     @Column(name = "avatar_URL")
     private String avatarURL;
 
@@ -88,8 +91,6 @@ public class User implements UserDetails {
         return true;
     }
 
-//    @Column(name = "photos_URL")
-//    @ElementCollection
-//    private List<String> photosURL;
+
 
 }
