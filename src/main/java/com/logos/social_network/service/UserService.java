@@ -8,10 +8,10 @@ import java.util.List;
 
 
 public interface UserService {
-//    List<User> addToFriends(User user);
-//    void acceptFriend(User user);
 //    void addAvatar(String avararURL);
     User getOne(Integer id);
     User registration(UserDto userDto);
     User save(User user);
+    void subscribe(User currentUser, User user);
+    void unubscribe(User currentUser, User user);
 }

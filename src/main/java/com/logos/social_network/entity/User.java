@@ -5,7 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,25 +43,31 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
 
-//    @Column(name = "friend_requests")
-//    @ManyToMany(mappedBy = "outcomingRequests", fetch = FetchType.LAZY)
-//    private List<User> friendRequests = new ArrayList<>();
-//
-//    @Column(name = "outcoming_requests")
-//    @ManyToMany
-//    private List<User> outcomingRequests = new ArrayList<>();
-//
-//    @Column(name = "friends")
-//    @ElementCollection
-//    private List<Integer> friendsIds = new ArrayList<>();
+    @Column(name = "avatar_URL")
+    private String avatarURL;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscription",
+            joinColumns = { @JoinColumn(name = "user_id")},
+            inverseJoinColumns = { @JoinColumn(name = "subscriber_id")}
+    )
+    private List<User> subscribers = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscription",
+            joinColumns = { @JoinColumn(name = "subscriber_id")},
+            inverseJoinColumns = { @JoinColumn(name = "user_id")}
+    )
+    private List<User> subscription = new ArrayList<>();
+
 
 //    private messages;
 
 //    @Column(name = "photos_URL")
 //    @ElementCollection
 //    private List<String> photosURL;
-    @Column(name = "avatar_URL")
-    private String avatarURL;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

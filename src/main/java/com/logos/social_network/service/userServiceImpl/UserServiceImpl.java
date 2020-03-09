@@ -25,29 +25,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
-
-//    @Override
-//    public List<User> addToFriends(User user) {
-//        List<User> friendRequests = user.getFriendRequests();
-//        if (!friendRequests.contains(user)) {
-//            user.getFriendRequests().add(user);
-//        } else {
-//            System.out.println("You have been having friend with " + user.getName());
-//        }
-//        return user.getFriendRequests();
-//    }
-//
-//    @Override
-//    public void acceptFriend(User user) {
-//        List<User> friendRequests = user.getFriendRequests();
-//        List<User> friends = userRepository.findAllById(user.getFriendsIds());
-//        if (!friends.contains(user)&&friendRequests.contains(user)){
-//            user.getFriendsIds().add(userRepository.save(user).getId());// update myself
-////            userRepository.save(user);
-//        }
-//
-//    }
-
 //    @Override
 //    public void addAvatar(String avararURL) {
 //        BufferedImage image = null;
@@ -82,6 +59,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public void subscribe(User currentUser, User user) {
+        if (!user.getSubscribers().contains(currentUser)){
+            user.getSubscribers().add(currentUser);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void unubscribe(User currentUser, User user) {
+        if (user.getSubscribers().contains(currentUser)){
+            user.getSubscribers().remove(currentUser);
+            userRepository.save(user);
+        }
     }
 
     private Boolean isRegistrationValide(UserDto userDto){
