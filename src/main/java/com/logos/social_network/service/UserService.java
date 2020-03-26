@@ -14,4 +14,5 @@ public interface UserService {
     User save(User user);
     void subscribe(User currentUser, User user);
     void unubscribe(User currentUser, User user);
+
 }

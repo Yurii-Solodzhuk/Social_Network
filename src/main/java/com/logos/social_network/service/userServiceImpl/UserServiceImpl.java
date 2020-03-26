@@ -3,6 +3,7 @@ package com.logos.social_network.service.userServiceImpl;
 import com.logos.social_network.dto.UserDto;
 import com.logos.social_network.entity.Role;
 import com.logos.social_network.entity.User;
+import com.logos.social_network.mapper.UserMapper;
 import com.logos.social_network.repository.UserRepository;
 import com.logos.social_network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
+    private UserMapper userMapper;
+
 //    @Override
 //    public void addAvatar(String avararURL) {
 //        BufferedImage image = null;
@@ -38,7 +42,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //    }
 
     public User getOne(Integer id){
-        return userRepository.findUserById(id);
+        return userRepository.getUserById(id);
     }
 
     @Override
