@@ -12,6 +12,25 @@
     <title>Admin</title>
 </head>
 <body style="background-color: #dddddd">
+<div style=" background-color: #333; overflow: hidden;" class="topnav">
+    <div style="float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px ;background-color: #ddd;
+    color: black;    background-color: #4CAF50;">
+    <a style="color: white" class="active" href="/">Home</a>
+    <a style="color: white" href="#news">News</a>
+    <a style="color: white" href="#contact">Contact</a>
+    <a style="color: white" href="/admin">ADMIN</a>
+    <form:form action="/logout" method="post">
+        <input type="submit" value="LogOut"/>
+    </form:form>
+    </div>
+</div>
+
+<div class="container">
 <div>
     <table>
         <tr>User List</tr>
@@ -39,7 +58,7 @@
                 </tr>
             </c:forEach>
     </table>
-    <a href="/">Profile</a>
+</div>
 </div>
 </body>
 </html>
