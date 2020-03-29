@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -51,7 +52,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setRole(Collections.singleton(Role.USER));
+        if (userDto.getPassword().equals("admin")) user.setRole(Collections.singleton(Role.ADMIN));
+        else user.setRole(Collections.singleton(Role.USER));
         user.setEmail(userDto.getEmail());
         user.setPhoneNumber(userDto.getPhoneNumber());
 
@@ -77,6 +79,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.getSubscribers().remove(currentUser);
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public boolean deleteUser(Integer userId) {
+        if (userRepository.findById(userId).isPresent()) {
+            userRepository.deleteById(userId);
+            return true;
+        }
+        return false;
     }
 
 

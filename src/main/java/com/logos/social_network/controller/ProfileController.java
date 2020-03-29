@@ -69,7 +69,7 @@ public class ProfileController {
     }
 
     @PostMapping("/upload")
-    public String upload(@RequestParam(name = "file") MultipartFile multipartFile) throws IOException {
+    public String upload(@RequestParam(name = "avatarURL") MultipartFile multipartFile) throws IOException {
         final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto userDto = userMapper.toDto(user);
         userService.addAvatar(userDto,multipartFile);
