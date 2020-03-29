@@ -7,18 +7,27 @@ import com.logos.social_network.mapper.UserMapper;
 import com.logos.social_network.repository.UserRepository;
 import com.logos.social_network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.UUID;
 
 
 @Service()
 public class UserServiceImpl implements UserService, UserDetailsService {
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     private UserRepository userRepository;
@@ -29,19 +38,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserMapper userMapper;
 
-//    @Override
-//    public void addAvatar(String avararURL) {
-//        BufferedImage image = null;
-//        try {
-//            File inputFile = new File(avararURL);
-//            image = ImageIO.read(inputFile);
-//            ImageIO.write(image, "png", inputFile); //change outputFile
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-    public User getOne(Integer id){
+    public User getUser(Integer id) {
         return userRepository.getUserById(id);
     }
 
@@ -67,7 +65,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void subscribe(User currentUser, User user) {
-        if (!user.getSubscribers().contains(currentUser)){
+        if (!user.getSubscribers().contains(currentUser)) {
             user.getSubscribers().add(currentUser);
             userRepository.save(user);
         }
@@ -75,17 +73,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void unubscribe(User currentUser, User user) {
-        if (user.getSubscribers().contains(currentUser)){
+        if (user.getSubscribers().contains(currentUser)) {
             user.getSubscribers().remove(currentUser);
             userRepository.save(user);
         }
     }
 
-    private Boolean isRegistrationValide(UserDto userDto){
-        if (!userDto.getEmail().contains("@"))return false;
-        if (!userDto.getPassword().equals(userDto.getRepeatPassword()))return false;
-        if (userDto.getPhoneNumber().length() != 10)return false;
-        if (userRepository.countByEmailAndPhoneNumber(userDto.getEmail(), userDto.getPhoneNumber()) > 0)return false;
+
+    private Boolean isRegistrationValide(UserDto userDto) {
+        if (!userDto.getEmail().contains("@")) return false;
+        if (!userDto.getPassword().equals(userDto.getRepeatPassword())) return false;
+        if (userDto.getPhoneNumber().length() != 10) return false;
+        if (userRepository.countByEmailAndPhoneNumber(userDto.getEmail(), userDto.getPhoneNumber()) > 0) return false;
         return true;
     }
 
@@ -94,5 +93,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(email);
     }
+
+
+    @Override
+    public void addAvatar(UserDto userDto, MultipartFile file) throws IOException {
+
+//        final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (file != null) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            file.transferTo(new File(uploadPath + "/" + resultFileName));
+
+            userDto.setAvatarURL(resultFileName);
+            User user = userMapper.toEntity(userDto);
+            userRepository.save(user);
+        }
+    }
+
+
 }
 

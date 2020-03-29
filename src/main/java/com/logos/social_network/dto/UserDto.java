@@ -157,4 +157,5 @@ public class UserDto {
     public void setAvatarURL(String avatarURL) {
         this.avatarURL = avatarURL;
     }
+
 }

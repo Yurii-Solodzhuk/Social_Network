@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Integer countByEmailAndPhoneNumber(String email, String phoneNumber);
     User findUserByEmail(String email);
 
+
+
 }

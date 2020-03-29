@@ -22,6 +22,7 @@ public class UserController {
     private UserService userService;
 
 
+
 //    @Autowired
 //    private WallMessageRepository wallMessageRepository;
 //    @Autowired
