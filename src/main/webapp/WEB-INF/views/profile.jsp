@@ -49,6 +49,43 @@
             </form>
         </div>
 
+    <c:if test="${!isCurrentUser}">
+        <c:if test="${isSubcriber}">
+            <a class="btn btn-info" href="/unsubscribe/${user.id}">Unsubscribe</a>
+        </c:if>
+            <a class="btn btn-info" href="/subscribe/${user.id}">Subscribe</a>
+    </c:if>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Subscriptions</div>
+                        <h3 class="card-text">
+                            <a href="/subscriptions/${user.id}/list">${subscriptionsCount}</a>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Subscribers</div>
+                        <h3 class="card-text">
+                            <a href="/subscribers/${user.id}/list">${subscribersCount}</a>
+
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
 
 
 

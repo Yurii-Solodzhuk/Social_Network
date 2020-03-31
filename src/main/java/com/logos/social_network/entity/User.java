@@ -45,9 +45,10 @@ public class User implements UserDetails {
     @Column(name = "avatar_URL")
     private String avatarURL;
 
+
     @ManyToMany
     @JoinTable(
-            name = "user_subscription",
+            name = "user_subscribers",
             joinColumns = { @JoinColumn(name = "user_id")},
             inverseJoinColumns = { @JoinColumn(name = "subscriber_id")}
     )
