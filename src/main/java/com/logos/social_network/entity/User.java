@@ -48,7 +48,7 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-            name = "user_subscribers",
+            name = "user_subscribtion",
             joinColumns = { @JoinColumn(name = "user_id")},
             inverseJoinColumns = { @JoinColumn(name = "subscriber_id")}
     )
@@ -56,7 +56,7 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-            name = "user_subscription",
+            name = "user_subscribtion",
             joinColumns = { @JoinColumn(name = "subscriber_id")},
             inverseJoinColumns = { @JoinColumn(name = "user_id")}
     )
