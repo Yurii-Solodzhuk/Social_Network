@@ -112,9 +112,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Override
-    public void addAvatar(UserDto userDto, MultipartFile file) throws IOException {
+    public void addAvatar(User user, MultipartFile file) throws IOException {
 
-//        final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (file != null) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -124,8 +123,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             String resultFileName = uuidFile + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + "/" + resultFileName));
 
-            userDto.setAvatarURL(resultFileName);
-            User user = userMapper.toEntity(userDto);
+            user.setAvatarURL(resultFileName);
+//            User user = userMapper.toEntity(userDto);
             userRepository.save(user);
         }
     }

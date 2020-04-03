@@ -59,6 +59,8 @@ public class ProfileController {
         model.addAttribute("subscribersCount", user.getSubscribers().size());
         model.addAttribute("isCurrentUser", currentUser.equals(user));
         model.addAttribute("isSubcriber", user.getSubscribers().contains(currentUser));
+        model.addAttribute("isAdmin", user.isAdmin());
+        model.addAttribute("currentUser", currentUser);
         return "profile";
     }
 
@@ -74,11 +76,11 @@ public class ProfileController {
         return "redirect:/" + recipient.getId();
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/upload-avatar")
     public String upload(@RequestParam(name = "avatarURL") MultipartFile multipartFile) throws IOException {
         final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDto userDto = userMapper.toDto(user);
-        userService.addAvatar(userDto,multipartFile);
+//        UserDto userDto = userMapper.toDto(user);
+        userService.addAvatar(user, multipartFile);
 
         return "redirect:/";
     }
@@ -103,11 +105,13 @@ public class ProfileController {
 
     @GetMapping("/{type}/{user}/list")
     public String userList(
+            @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
             @PathVariable String type,
             Model model){
         model.addAttribute("user", user);
         model.addAttribute("type", type);
+        model.addAttribute("currentUser", currentUser);
 
         if ("subscriptions".equals(type)){
             model.addAttribute("subscriptions", user.getSubscription());

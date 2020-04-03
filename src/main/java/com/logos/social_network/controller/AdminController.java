@@ -25,13 +25,12 @@ public class AdminController {
         return "adminPage";
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/delete")
     public String deleteUser(@RequestParam Integer userId,
-                             @RequestParam String action,
-                             Model model){
+                             @RequestParam String action){
         if (action.equals("delete")){
             userService.deleteUser(userId);
         }
-        return "redirect:/adminPage";
+        return "redirect:/admin";
     }
 }

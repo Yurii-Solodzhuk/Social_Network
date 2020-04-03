@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public interface UserService {
-    void addAvatar(UserDto userDto, MultipartFile file) throws IOException;
+    void addAvatar(User user, MultipartFile file) throws IOException;
     User getUser(Integer id);
     User registration(UserDto userDto);
     User save(User user);

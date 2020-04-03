@@ -76,6 +76,10 @@ public class User implements UserDetails {
 //    @ElementCollection
 //    private List<String> photosURL;
 
+    public boolean isAdmin(){
+        return role.contains(Role.ADMIN);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRole();
