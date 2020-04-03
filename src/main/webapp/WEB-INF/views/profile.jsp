@@ -16,36 +16,55 @@
 <%@include file="template/navbar.jsp" %>
 
 <div class="container mt-5">
-
-    <b>User info</b>
-    <div>
-        userName: <b>${user.name}</b> surname: <b>${user.surname}</b> phone: <b>${user.phoneNumber}</b>
-    </div>
+    <div class="row">
+        <div class="col-lg-4">
 
 
-    <div class="card" style="width: 16rem;">
-        <img src="/img/${user.avatarURL}" class="card-img-top" alt="Avatar">
-        <c:if test="${isCurrentUser}">
-        <div class="card-body" style="background-color: #dddddd">
-            <form:form method="post" action="/upload-avatar" enctype="multipart/form-data">
-                <input class="mr-1" type="file" name="avatarURL" id="avatarURL" style="width: 120px">
-                <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">Upload
-                </button>
-            </form:form>
+            <div class="card" style="width: 15rem;">
+                <img src="/img/${user.avatarURL}" class="card-img-top" alt="Avatar">
+                <c:if test="${isCurrentUser}">
+                    <div class="card-body" style="background-color: #dddddd">
+                        <form:form method="post" action="/upload-avatar" enctype="multipart/form-data">
+                            <input class="mr-1" type="file" name="avatarURL" id="avatarURL" style="width: 120px">
+                            <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
+                                Upload
+                            </button>
+                        </form:form>
+                    </div>
+                </c:if>
+            </div>
         </div>
-        </c:if>
+        <div class="col-lg">
+            <b style="font-size: 30px">${user.name} ${user.surname}</b>
+            <div class="row mt-2">
+                <div class="col-1">
+                    <c:if test="${!isCurrentUser}">
+                        <a class="btn btn-info" href="#">Message</a>
+                    </c:if>
+                </div>
+                <div class="col-1 ml-5">
+                    <c:if test="${!isCurrentUser}">
+                        <c:if test="${isSubcriber}">
+                            <a class="btn btn-info" href="/unsubscribe/${user.id}">Unsubscribe</a>
+                        </c:if>
+                        <c:if test="${!isSubcriber}">
+                            <a class="btn btn-info" href="/subscribe/${user.id}">Subscribe</a>
+                        </c:if>
+                    </c:if>
+                </div>
+            </div>
+            <div class="container  mt-4">
+                <div class="row">
+                    <b>User info</b>
+                    <div>
+                        phone: <b>${user.phoneNumber}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
-
-    <c:if test="${!isCurrentUser}">
-        <c:if test="${isSubcriber}">
-            <a class="btn btn-info" href="/unsubscribe/${user.id}">Unsubscribe</a>
-        </c:if>
-        <c:if test="${!isSubcriber}">
-            <a class="btn btn-info" href="/subscribe/${user.id}">Subscribe</a>
-        </c:if>
-    </c:if>
     <div class="container my-3">
         <div class="row">
             <div class="col">
@@ -90,16 +109,18 @@
         <div><strong>All posts</strong></div>
         <div>
             <ul class="list-group">
-        <c:forEach var="post" items="${posts}">
-            <div class="container mt-3">
-                <li class="list-group-item">
-            <a href="/${post.author.id}"><b><img src="/img/${post.author.avatarURL}" class="rounded-circle z-depth-0"
-                                                 alt="avatar image" height="40px"
-                                                 width="40px"> ${post.author.name} ${post.author.surname}</b></a><br>
-            <b>${post.text}</b> <br/>
-                </li>
-            </div>
-        </c:forEach>
+                <c:forEach var="post" items="${posts}">
+                    <div class="container mt-3">
+                        <li class="list-group-item">
+                            <a href="/${post.author.id}"><b><img src="/img/${post.author.avatarURL}"
+                                                                 class="rounded-circle z-depth-0"
+                                                                 alt="avatar image" height="40px"
+                                                                 width="40px"> ${post.author.name} ${post.author.surname}
+                            </b></a><br>
+                            <b>${post.text}</b> <br/>
+                        </li>
+                    </div>
+                </c:forEach>
             </ul>
         </div>
     </div>
