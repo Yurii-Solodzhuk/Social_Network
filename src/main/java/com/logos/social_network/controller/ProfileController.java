@@ -3,7 +3,9 @@ package com.logos.social_network.controller;
 import com.logos.social_network.dto.UserDto;
 import com.logos.social_network.dto.WallMessageDto;
 import com.logos.social_network.entity.User;
-import com.logos.social_network.mapper.UserMapper;
+import com.logos.social_network.entity.WallMessage;
+import com.logos.social_network.mapper.Mapper;
+import com.logos.social_network.service.PhotoService;
 import com.logos.social_network.service.UserService;
 import com.logos.social_network.service.WallMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,9 @@ public class ProfileController {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserMapper userMapper;
+    private Mapper userMapper;
+    @Autowired
+    private PhotoService photoService;
 
 
     @ModelAttribute("user")
@@ -61,6 +65,7 @@ public class ProfileController {
         model.addAttribute("isSubcriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("isAdmin", user.isAdmin());
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("photos", user.getPhotos());
         return "profile";
     }
 
@@ -81,6 +86,14 @@ public class ProfileController {
         final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        UserDto userDto = userMapper.toDto(user);
         userService.addAvatar(user, multipartFile);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/upload")
+    public String uploadPhoto(@RequestParam(name = "photos") MultipartFile multipartFile,
+                              @AuthenticationPrincipal User user) throws IOException {
+        photoService.uploadPhoto(user,multipartFile);
 
         return "redirect:/";
     }
@@ -120,6 +133,18 @@ public class ProfileController {
         }
 
         return "subscriptions";
+    }
+
+    @GetMapping("{user}/{post}/like")
+    public String like(
+            @AuthenticationPrincipal User currnetUser,
+            @PathVariable WallMessage post,
+            @PathVariable User user
+            ){
+        wallMessageService.like(currnetUser, post);
+
+
+        return "redirect:/" + user.getId();
     }
 
 

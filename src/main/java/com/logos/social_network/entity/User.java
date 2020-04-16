@@ -62,19 +62,20 @@ public class User implements UserDetails {
     )
     private List<User> subscription = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "user_photos",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "photoURL")}
+//    )
+    private List<Photo> photos = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WallMessage> receivedPosts = new ArrayList<>();
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WallMessage> sentPosts = new ArrayList<>();
-
-
-
-
-//    @Column(name = "photos_URL")
-//    @ElementCollection
-//    private List<String> photosURL;
 
     public boolean isAdmin(){
         return role.contains(Role.ADMIN);

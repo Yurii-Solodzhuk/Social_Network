@@ -15,4 +15,5 @@ public interface WallMessageService {
     List<WallMessage> findAllMessagesOfCurrentUser(final Integer id);
 
     void addPost(User author, User recipient, String text);
+    void like(User user, WallMessage wallMessage);
 }

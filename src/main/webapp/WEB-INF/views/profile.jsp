@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="https://kit.fontawesome.com/f9e982cf9d.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -96,7 +96,7 @@
             <div class="col-lg-3">
                 <div>
                     Work: <br>
-                    Education: <br>
+                    B-Day: <br>
                     About me:
                 </div>
             </div>
@@ -107,6 +107,23 @@
     <%--    User photos--%>
     <div class="container mt-4" style="background-color: whitesmoke">
         <div class="row ml-5" style="font-size: 20px;"><strong>Photos</strong></div>
+        <div>
+            <c:forEach items="${photos}" var="photo">
+            <div class="card" style="width: 12rem;">
+                <img src="/img/${photo.photoURL}" class="card-img-top" alt="Photo">
+            </div>
+            </c:forEach>
+        </div>
+        <c:if test="${isCurrentUser}">
+
+                <form:form method="post" action="/upload" enctype="multipart/form-data">
+                    <input type="file" name="photos" id="photoURL" style="width: 112px">
+                    <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
+                        Upload
+                    </button>
+                </form:form>
+
+        </c:if>
     </div>
 
 
@@ -148,7 +165,37 @@
                                                                  width="40px"> ${post.author.name} ${post.author.surname}
                             </b></a><br>
                             <b>${post.text}</b> <br/>
+                            <a class="col align-self-center" href="/${post.recipient.id}/${post.id}/like">
+                                <c:if test="${post.meLiked}">
+                                <i class="fas fa-heart"></i>
+                                </c:if>
+                                <c:if test="${!post.meLiked}">
+                                <i class="far fa-heart"></i>
+                                </c:if>
+                                ${post.likesCount}
+                            </a>
                         </li>
+<%--                        <div id="disqus_thread"></div>--%>
+<%--                        <script>--%>
+
+<%--                            /**--%>
+<%--                             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.--%>
+<%--                             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/--%>
+
+                        <%--    var disqus_config = function () {--%>
+                        <%--    this.page.url = "http://localhost:8080/{id}";  // Replace PAGE_URL with your page's canonical URL variable--%>
+                        <%--    this.page.identifier = "id"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable--%>
+                        <%--    };--%>
+
+                        <%--    (function() { // DON'T EDIT BELOW THIS LINE--%>
+                        <%--        var d = document, s = d.createElement('script');--%>
+                        <%--        s.src = 'https://social-network-2.disqus.com/embed.js';--%>
+                        <%--        s.setAttribute('data-timestamp', +new Date());--%>
+                        <%--        (d.head || d.body).appendChild(s);--%>
+                        <%--    })();--%>
+                        <%--</script>--%>
+                        <%--<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>--%>
+
                     </div>
                 </c:forEach>
             </ul>

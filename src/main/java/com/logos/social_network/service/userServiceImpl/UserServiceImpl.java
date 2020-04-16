@@ -1,15 +1,15 @@
 package com.logos.social_network.service.userServiceImpl;
 
 import com.logos.social_network.dto.UserDto;
+import com.logos.social_network.entity.Photo;
 import com.logos.social_network.entity.Role;
 import com.logos.social_network.entity.User;
-import com.logos.social_network.mapper.UserMapper;
+import com.logos.social_network.mapper.Mapper;
 import com.logos.social_network.repository.UserRepository;
 import com.logos.social_network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private PasswordEncoder encoder;
 
     @Autowired
-    private UserMapper userMapper;
+    private Mapper mapper;
 
 
     public User getUser(Integer id) {
@@ -128,7 +128,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userRepository.save(user);
         }
     }
-
 
 }
 

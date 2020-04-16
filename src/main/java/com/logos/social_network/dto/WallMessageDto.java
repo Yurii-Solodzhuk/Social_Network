@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 public class WallMessageDto {
@@ -12,12 +15,15 @@ public class WallMessageDto {
     private String text;
     private Integer authorId;
     private Integer recipientId;
+    private Integer likesCount;
+    private Boolean meLiked;
+    private List<User> likes = new ArrayList<>();
 
     public WallMessageDto() {
     }
 
-    public WallMessageDto(String text, Integer authorId) {
-        this.text = text;
-        this.authorId = authorId;
-    }
+
+
+
+
 }
