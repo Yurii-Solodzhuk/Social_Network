@@ -63,11 +63,6 @@ public class User implements UserDetails {
     private List<User> subscription = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "user_photos",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "photoURL")}
-//    )
     private List<Photo> photos = new ArrayList<>();
 
 
@@ -76,6 +71,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WallMessage> sentPosts = new ArrayList<>();
+
+    @ManyToMany
+    private List<Chat> chats = new ArrayList<>();
 
     public boolean isAdmin(){
         return role.contains(Role.ADMIN);

@@ -1,6 +1,5 @@
 package com.logos.social_network.service.userServiceImpl;
 
-import com.logos.social_network.dto.WallMessageDto;
 import com.logos.social_network.entity.User;
 import com.logos.social_network.entity.WallMessage;
 import com.logos.social_network.mapper.Mapper;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("wallMessageService")
 public class WallMessageServiceImpl implements WallMessageService {
     @Autowired
     private WallMessageRepository wallMessageRepository;

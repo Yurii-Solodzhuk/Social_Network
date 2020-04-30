@@ -1,7 +1,6 @@
 package com.logos.social_network.dto;
 
 import com.logos.social_network.entity.User;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,7 +1,6 @@
 package com.logos.social_network.service.userServiceImpl;
 
 import com.logos.social_network.dto.UserDto;
-import com.logos.social_network.entity.Photo;
 import com.logos.social_network.entity.Role;
 import com.logos.social_network.entity.User;
 import com.logos.social_network.mapper.Mapper;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Service()
+@Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Value("${upload.path}")
@@ -114,7 +113,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void addAvatar(User user, MultipartFile file) throws IOException {
 
-        if (file != null) {
+        if (file != null&&!file.isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();

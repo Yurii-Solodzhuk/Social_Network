@@ -40,7 +40,7 @@
             <div class="row mt-2">
                 <div class="col-1">
                     <c:if test="${!isCurrentUser}">
-                        <a class="btn btn-info" href="#">Message</a>
+                        <a class="btn btn-info" href="/chats/${user.id}">Message</a>
                     </c:if>
                 </div>
                 <div class="col-lg-1 ml-5">
