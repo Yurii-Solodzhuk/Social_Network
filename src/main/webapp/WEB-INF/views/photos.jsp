@@ -15,32 +15,22 @@
 <body style="background-color: #dddddd">
 <%@include file="template/navbar.jsp" %>
 
+<div class="container">
+    <div class="row">
+        ${id}
 
 
+        <%--                <div class="card" style="width: 12rem;">--%>
+        <%--&lt;%&ndash;                    <img src="/img/${photo.photoURL}" style="width: 12rem"  alt="Photo">&ndash;%&gt;--%>
+        <%--                </div>--%>
 
-
-
-
-
-
-<div>
-    <ul class="list-group">
-        <c:forEach var="chat" items="${chats}">
-            <div class="container mt-3">
-                <li class="list-group-item">
-                    <a href="chats/${chat.recipientId}">${chat.recipientName}</a><br>
-                        ${chat.lastMessage}, ${chat.lastMessageDate}
-                </li>
-
+        <c:forEach items="${photos}" var="photo">
+            <div class="card">
+                <img src="/img/${photo.photoURL}" class="card-img-top" style="width: 12rem" alt="Photo">
             </div>
         </c:forEach>
-    </ul>
+    </div>
 </div>
-
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

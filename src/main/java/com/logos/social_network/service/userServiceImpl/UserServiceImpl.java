@@ -123,10 +123,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             file.transferTo(new File(uploadPath + "/" + resultFileName));
 
             user.setAvatarURL(resultFileName);
-//            User user = userMapper.toEntity(userDto);
             userRepository.save(user);
         }
     }
 
+    @Override
+    public void changePassword(User user, String password, String repeatPassword) {
+        if (password.equals(repeatPassword))
+        user.setPassword(encoder.encode(password));
+        userRepository.save(user);
+    }
 }
 

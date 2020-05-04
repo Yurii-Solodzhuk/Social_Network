@@ -13,7 +13,9 @@
 <body style="background-color: #dddddd">
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-8"></div>
+        <div class="col-sm-8">
+            <img src="" alt="Login"/>
+        </div>
         <div class="col-sm-4">
             <h1 style="text-align: center; color: #04B4AE">Login to continue</h1>
             <form:form class="form-horizontal" action="/login" method="POST">

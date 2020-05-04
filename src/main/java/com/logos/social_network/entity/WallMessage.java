@@ -32,6 +32,7 @@ public class WallMessage {
     private List<User> likes = new ArrayList<>();
 
     private Boolean meLiked;
+
     private Integer likesCount;
 
 

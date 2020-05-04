@@ -15,32 +15,26 @@
 <body style="background-color: #dddddd">
 <%@include file="template/navbar.jsp" %>
 
+<div class="container">
+    <div class="row">
 
 
-
-
-
-
-
-
-<div>
-    <ul class="list-group">
-        <c:forEach var="chat" items="${chats}">
-            <div class="container mt-3">
-                <li class="list-group-item">
-                    <a href="chats/${chat.recipientId}">${chat.recipientName}</a><br>
-                        ${chat.lastMessage}, ${chat.lastMessageDate}
-                </li>
-
-            </div>
-        </c:forEach>
-    </ul>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card" style="width: 15rem;">
+                        <img src="/img/${user.avatarURL}" class="card-img-top" alt="Avatar">
+                            <div class="card-body" style="background-color: #dddddd">
+                                <form:form method="post" action="/upload-avatar" enctype="multipart/form-data">
+                                    <input type="file" name="avatarURL" id="avatarURL">
+                                    <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
+                                        Upload
+                                    </button>
+                                </form:form>
+                            </div>
+                    </div>
+                </div>
+    </div>
 </div>
-
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

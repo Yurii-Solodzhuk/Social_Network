@@ -18,20 +18,18 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-4">
-
-
             <div class="card" style="width: 15rem;">
                 <img src="/img/${user.avatarURL}" class="card-img-top" alt="Avatar">
-                <c:if test="${isCurrentUser}">
-                    <div class="card-body" style="background-color: #dddddd">
-                        <form:form method="post" action="/upload-avatar" enctype="multipart/form-data">
-                            <input type="file" name="avatarURL" id="avatarURL" style="width: 112px">
-                            <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
-                                Upload
-                            </button>
-                        </form:form>
-                    </div>
-                </c:if>
+<%--                <c:if test="${isCurrentUser}">--%>
+<%--                    <div class="card-body" style="background-color: #dddddd">--%>
+<%--                        <form:form method="post" action="/upload-avatar" enctype="multipart/form-data">--%>
+<%--                            <input type="file" name="avatarURL" id="avatarURL" style="width: 112px">--%>
+<%--                            <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">--%>
+<%--                                Upload--%>
+<%--                            </button>--%>
+<%--                        </form:form>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
             </div>
         </div>
 
@@ -108,23 +106,42 @@
     <div class="container mt-4" style="background-color: whitesmoke">
         <div class="row ml-5" style="font-size: 20px;"><strong>Photos</strong></div>
         <div>
-            <c:forEach items="${photos}" var="photo">
-            <div class="card" style="width: 12rem;">
-                <img src="/img/${photo.photoURL}" class="card-img-top" alt="Photo">
+
+            <div class="card-deck">
+                <c:forEach items="${photos}" var="photo">
+                    <div class="card">
+                        <img src="/img/${photo.photoURL}" style="width: 8rem; height: 8rem"  alt="Photo">
+                        <a class="col align-self-center" href="/${user.id}/${photo.id}/islike">
+                            <c:if test="${photo.meLiked}">
+                                <i class="fas fa-heart"></i>
+                            </c:if>
+                            <c:if test="${!photo.meLiked}">
+                                <i class="far fa-heart"></i>
+                            </c:if>
+                                ${photo.likesCount}
+                        </a>
+                    </div>
+                </c:forEach>
             </div>
-            </c:forEach>
         </div>
         <c:if test="${isCurrentUser}">
 
-                <form:form method="post" action="/upload" enctype="multipart/form-data">
-                    <input type="file" name="photos" id="photoURL" style="width: 112px">
-                    <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
-                        Upload
-                    </button>
-                </form:form>
+            <form:form method="post" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="photos" id="photoURL" style="width: 112px">
+                <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
+                    Upload
+                </button>
+            </form:form>
 
         </c:if>
     </div>
+
+
+<%--    <div class="card">--%>
+<%--        <img src="/img/${photo.photoURL}" class="card-img-top" alt="Photo">--%>
+<%--        <div class="card-body">--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 
     <%--User posts--%>
@@ -167,35 +184,14 @@
                             <b>${post.text}</b> <br/>
                             <a class="col align-self-center" href="/${post.recipient.id}/${post.id}/like">
                                 <c:if test="${post.meLiked}">
-                                <i class="fas fa-heart"></i>
+                                    <i class="fas fa-heart"></i>
                                 </c:if>
                                 <c:if test="${!post.meLiked}">
-                                <i class="far fa-heart"></i>
+                                    <i class="far fa-heart"></i>
                                 </c:if>
-                                ${post.likesCount}
+                                    ${post.likesCount}
                             </a>
                         </li>
-<%--                        <div id="disqus_thread"></div>--%>
-<%--                        <script>--%>
-
-<%--                            /**--%>
-<%--                             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.--%>
-<%--                             *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/--%>
-
-                        <%--    var disqus_config = function () {--%>
-                        <%--    this.page.url = "http://localhost:8080/{id}";  // Replace PAGE_URL with your page's canonical URL variable--%>
-                        <%--    this.page.identifier = "id"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable--%>
-                        <%--    };--%>
-
-                        <%--    (function() { // DON'T EDIT BELOW THIS LINE--%>
-                        <%--        var d = document, s = d.createElement('script');--%>
-                        <%--        s.src = 'https://social-network-2.disqus.com/embed.js';--%>
-                        <%--        s.setAttribute('data-timestamp', +new Date());--%>
-                        <%--        (d.head || d.body).appendChild(s);--%>
-                        <%--    })();--%>
-                        <%--</script>--%>
-                        <%--<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>--%>
-
                     </div>
                 </c:forEach>
             </ul>

@@ -1,20 +1,16 @@
-package com.logos.social_network.repository;
+package com.logos.social_network.dao.daoImpl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import com.logos.social_network.dao.ChatDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 
 @Repository
-public class ChatDAOImpl implements ChatDAO{
+public class ChatDAOImpl implements ChatDAO {
 
     public static final int FIRST_ELEMENT = 0;
 

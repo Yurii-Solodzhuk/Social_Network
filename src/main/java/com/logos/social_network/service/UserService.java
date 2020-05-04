@@ -18,5 +18,6 @@ public interface UserService {
     void unubscribe(User currentUser, User user);
     List<User> getAllUsers();
     boolean deleteUser(Integer userId);
+    void changePassword(User user, String password, String repeatPassword);
 
 }

@@ -15,32 +15,35 @@
 <body style="background-color: #dddddd">
 <%@include file="template/navbar.jsp" %>
 
-
-
-
-
-
-
-
-
-<div>
-    <ul class="list-group">
-        <c:forEach var="chat" items="${chats}">
-            <div class="container mt-3">
-                <li class="list-group-item">
-                    <a href="chats/${chat.recipientId}">${chat.recipientName}</a><br>
-                        ${chat.lastMessage}, ${chat.lastMessageDate}
-                </li>
-
-            </div>
-        </c:forEach>
-    </ul>
+<div class="container">
+    <div class="row">
+        <div>
+            <ul class="list-group">
+                <c:forEach var="post" items="${posts}">
+                    <div class="container mt-3">
+                        <li class="list-group-item">
+                            <a href="/${post.author.id}"><b><img src="/img/${post.author.avatarURL}"
+                                                                 class="rounded-circle z-depth-0"
+                                                                 alt="avatar image" height="40px"
+                                                                 width="40px"> ${post.author.name} ${post.author.surname}
+                            </b></a><br>
+                            <b>${post.text}</b> <br/>
+                            <a class="col align-self-center" href="/${post.recipient.id}/${post.id}/like">
+                                <c:if test="${post.meLiked}">
+                                    <i class="fas fa-heart"></i>
+                                </c:if>
+                                <c:if test="${!post.meLiked}">
+                                    <i class="far fa-heart"></i>
+                                </c:if>
+                                    ${post.likesCount}
+                            </a>
+                        </li>
+                    </div>
+                </c:forEach>
+            </ul>
+        </div>
+    </div>
 </div>
-
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

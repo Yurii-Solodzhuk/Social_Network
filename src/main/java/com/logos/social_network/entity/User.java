@@ -24,9 +24,6 @@ public class User implements UserDetails {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-//    @Column(name = "gender")
-//    private boolean gender;
-
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
@@ -72,7 +69,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WallMessage> sentPosts = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Chat> chats = new ArrayList<>();
 
     public boolean isAdmin(){

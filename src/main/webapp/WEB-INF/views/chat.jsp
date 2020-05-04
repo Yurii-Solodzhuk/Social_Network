@@ -28,9 +28,6 @@
     <div class="col-lg-3">
         <div>
             <div>
-                ${id}
-                ${chat}
-                    ${chatId}
                 <form:form class="form-horizontal"
                            action="/chats/${chatId}/${id}/message" method="POST">
                     <input type="text" name="message"  placeholder="Message"/>
@@ -55,8 +52,14 @@
             <div class="container mt-3">
 
                 <li class="list-group-item">
-                    ${message.text}, ${message.date}, ${message.ownerId}, ${message.ownerName},
-                            ${message.recipientId},${message.chatId}
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <strong>${message.ownerName}</strong> <br>${message.text}
+                        </div>
+                        <div class="col-lg-2">
+                                ${message.date}
+                        </div>
+                    </div>
                 </li>
 
             </div>

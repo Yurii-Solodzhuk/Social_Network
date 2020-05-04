@@ -2,6 +2,7 @@ package com.logos.social_network.controller;
 
 import com.logos.social_network.dto.UserDto;
 import com.logos.social_network.dto.WallMessageDto;
+import com.logos.social_network.entity.Photo;
 import com.logos.social_network.entity.User;
 import com.logos.social_network.entity.WallMessage;
 import com.logos.social_network.mapper.Mapper;
@@ -21,14 +22,10 @@ import java.io.IOException;
 @Controller
 public class ProfileController {
 
-
     @Autowired
     private WallMessageService wallMessageService;
-
     @Autowired
     private UserService userService;
-    @Autowired
-    private Mapper userMapper;
     @Autowired
     private PhotoService photoService;
 
@@ -74,76 +71,68 @@ public class ProfileController {
                       Model model) {
         final User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         final User recipient = userService.getUser(wallMessageDto.getRecipientId());
-
         wallMessageService.addPost(author, recipient, wallMessageDto.getText());
-//        List<WallMessage> wallMessages = wallMessageService.findAllMessagesOfCurrentUser(recipient.getId());
-//        model.addAttribute("posts", wallMessages);
         return "redirect:/" + recipient.getId();
     }
 
     @PostMapping("/upload-avatar")
     public String upload(@RequestParam(name = "avatarURL") MultipartFile multipartFile) throws IOException {
         final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        UserDto userDto = userMapper.toDto(user);
         userService.addAvatar(user, multipartFile);
-
         return "redirect:/";
     }
 
     @PostMapping("/upload")
     public String uploadPhoto(@RequestParam(name = "photos") MultipartFile multipartFile,
-                              @AuthenticationPrincipal User user) throws IOException {
+                              @AuthenticationPrincipal User currentUser) throws IOException {
+        User user = userService.getUser(currentUser.getId());
         photoService.uploadPhoto(user,multipartFile);
-
         return "redirect:/";
     }
 
     @GetMapping("/subscribe/{user}")
-    public String subscribe(
-            @AuthenticationPrincipal User currentUser,
-            @PathVariable User user){
+    public String subscribe(@AuthenticationPrincipal User currentUser,
+                            @PathVariable User user){
         userService.subscribe(currentUser, user);
-
         return "redirect:/" + user.getId();
     }
 
     @GetMapping("/unsubscribe/{user}")
-    public String unsubscribe(
-            @AuthenticationPrincipal User currentUser,
-            @PathVariable User user){
+    public String unsubscribe(@AuthenticationPrincipal User currentUser,
+                              @PathVariable User user){
         userService.unubscribe(currentUser, user);
-
         return "redirect:/" + user.getId();
     }
 
     @GetMapping("/{type}/{user}/list")
-    public String userList(
-            @AuthenticationPrincipal User currentUser,
-            @PathVariable User user,
-            @PathVariable String type,
-            Model model){
+    public String userList(@AuthenticationPrincipal User currentUser,
+                           @PathVariable User user,
+                           @PathVariable String type,
+                           Model model){
         model.addAttribute("user", user);
         model.addAttribute("type", type);
         model.addAttribute("currentUser", currentUser);
-
         if ("subscriptions".equals(type)){
             model.addAttribute("subscriptions", user.getSubscription());
         }else {
             model.addAttribute("subscriptions", user.getSubscribers());
         }
-
         return "subscriptions";
     }
 
     @GetMapping("{user}/{post}/like")
-    public String like(
-            @AuthenticationPrincipal User currnetUser,
-            @PathVariable WallMessage post,
-            @PathVariable User user
-            ){
+    public String like(@AuthenticationPrincipal User currnetUser,
+                       @PathVariable WallMessage post,
+                       @PathVariable User user){
         wallMessageService.like(currnetUser, post);
+        return "redirect:/" + user.getId();
+    }
 
-
+    @GetMapping("{user}/{photo}/islike")
+    public String likes(@AuthenticationPrincipal User currnetUser,
+                        @PathVariable Photo photo,
+                        @PathVariable User user){
+        photoService.like(currnetUser, photo);
         return "redirect:/" + user.getId();
     }
 

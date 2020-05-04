@@ -15,32 +15,33 @@
 <body style="background-color: #dddddd">
 <%@include file="template/navbar.jsp" %>
 
-
-
-
-
-
-
-
-
-<div>
-    <ul class="list-group">
-        <c:forEach var="chat" items="${chats}">
-            <div class="container mt-3">
-                <li class="list-group-item">
-                    <a href="chats/${chat.recipientId}">${chat.recipientName}</a><br>
-                        ${chat.lastMessage}, ${chat.lastMessageDate}
-                </li>
-
-            </div>
-        </c:forEach>
-    </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <form:form class="form-horizontal" modelAttribute="user"
+                       action="/change" method="POST">
+                <div class="form-group">
+                    <label for="password" class="control-label col-sm-2">Password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" name="password" id="password" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                        <%--<div class="col-sm-10 col-sm-offset-2"><form:errors path="checkPassword"/></div>--%>
+                    <label for="repeatPassword" class="control-label col-sm-2">Repeat password:</label>
+                    <div class="col-sm-10">
+                        <input type="password" name="repeatPassword" id="repeatPassword" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">Save</button>
+                    </div>
+                </div>
+            </form:form>
+        </div>
+    </div>
 </div>
-
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

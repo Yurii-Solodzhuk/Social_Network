@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @SpringBootApplication
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SocialNetworkApplication {
 
 

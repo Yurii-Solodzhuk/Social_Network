@@ -3,7 +3,7 @@ package com.logos.social_network.service.userServiceImpl;
 import com.logos.social_network.entity.Chat;
 import com.logos.social_network.entity.Message;
 import com.logos.social_network.entity.User;
-import com.logos.social_network.repository.ChatDAO;
+import com.logos.social_network.dao.ChatDAO;
 import com.logos.social_network.repository.ChatRepository;
 import com.logos.social_network.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +30,8 @@ public class ChatServiceImpl implements ChatService {
         members.add(author);
         members.add(recipient);
         Chat chat = new Chat(members);
+        author.setChats(Arrays.asList(chat));
+        recipient.setChats(Arrays.asList(chat));
         Chat save = chatRepository.save(chat);
         return save;
     }
@@ -60,8 +63,4 @@ public class ChatServiceImpl implements ChatService {
         chatRepository.save(chat);
     }
 
-    @Override
-    public Chat getChatByID(Integer chatId) {
-        return chatRepository.findChatById(chatId);
-    }
 }
