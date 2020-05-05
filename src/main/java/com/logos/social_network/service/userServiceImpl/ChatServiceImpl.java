@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,8 +29,8 @@ public class ChatServiceImpl implements ChatService {
         members.add(author);
         members.add(recipient);
         Chat chat = new Chat(members);
-        author.setChats(Arrays.asList(chat));
-        recipient.setChats(Arrays.asList(chat));
+        author.getChats().add(chat);
+        recipient.getChats().add(chat);
         return chatRepository.save(chat);
     }
 

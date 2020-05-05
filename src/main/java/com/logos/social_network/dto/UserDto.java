@@ -1,8 +1,6 @@
 package com.logos.social_network.dto;
 
 import com.logos.social_network.entity.Role;
-import com.logos.social_network.entity.User;
-import com.logos.social_network.entity.WallMessage;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +21,9 @@ public class UserDto {
     private String password;
     private String repeatPassword;
     private Set<Role> role;
-    private List<User> subscribers = new ArrayList<>();
-    private List<User> subscription = new ArrayList<>();
-    private List<WallMessage> posts;
+    private List<UserDto> subscribers = new ArrayList<>();
+    private List<UserDto> subscription = new ArrayList<>();
+    private List<WallMessageDto> posts;
     private String avatarURL;
     private String city;
     private String work;
@@ -47,6 +45,5 @@ public class UserDto {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 
 }

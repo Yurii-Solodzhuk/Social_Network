@@ -30,7 +30,7 @@ public class ChatMapperImpl implements ChatMapper {
                 .setLastMessage(lastMessage.getText())
                 .setLastMessageDate(formatter.format(lastMessage.getCreatedOn()))
                 .setRecipientId(user.getId())
-                .setRecipientName(user.getName());
+                .setRecipientName(user.getName() + " " + user.getSurname());
     }
 
     private User getAnotherUser(Chat chat, Integer id) {
