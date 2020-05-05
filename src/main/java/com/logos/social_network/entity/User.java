@@ -42,6 +42,13 @@ public class User implements UserDetails {
     @Column(name = "avatar_URL")
     private String avatarURL;
 
+    private String city;
+
+    private String work;
+
+    private String bithday;
+
+    private String info;
 
     @ManyToMany
     @JoinTable(
@@ -71,6 +78,8 @@ public class User implements UserDetails {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Chat> chats = new ArrayList<>();
+
+
 
     public boolean isAdmin(){
         return role.contains(Role.ADMIN);

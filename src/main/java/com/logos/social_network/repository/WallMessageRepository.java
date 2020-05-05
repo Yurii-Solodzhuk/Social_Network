@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface WallMessageRepository extends JpaRepository<WallMessage, Integer> {
-
     List<WallMessage> findAllByAuthorId(final Integer id);
 }

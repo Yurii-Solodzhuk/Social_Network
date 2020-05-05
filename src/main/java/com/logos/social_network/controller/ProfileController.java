@@ -4,8 +4,6 @@ import com.logos.social_network.dto.UserDto;
 import com.logos.social_network.dto.WallMessageDto;
 import com.logos.social_network.entity.Photo;
 import com.logos.social_network.entity.User;
-import com.logos.social_network.entity.WallMessage;
-import com.logos.social_network.mapper.Mapper;
 import com.logos.social_network.service.PhotoService;
 import com.logos.social_network.service.UserService;
 import com.logos.social_network.service.WallMessageService;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -41,9 +40,9 @@ public class ProfileController {
     }
 
     @GetMapping("/")
-    public String getMainPage(Model model) {
-        final User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return getUserInfo(author.getId(), model);
+    public String getMainPage(@AuthenticationPrincipal User currentUser, Model model) {
+        User user = userService.getUser(currentUser.getId());
+        return getUserInfo(user.getId(), model);
     }
 
     @GetMapping("/{id}")
@@ -62,79 +61,39 @@ public class ProfileController {
         model.addAttribute("isSubcriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("isAdmin", user.isAdmin());
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("photos", user.getPhotos());
+        List<Photo> photos = user.getPhotos();
+        if (photos.size() > 7) {
+            List<Photo> photo = user.getPhotos().subList(0, 7);
+            model.addAttribute("photos", photo);
+        } else {
+            model.addAttribute("photos", photos);
+        }
         return "profile";
     }
 
     @PostMapping("/post")
     public String add(@ModelAttribute("post") WallMessageDto wallMessageDto,
-                      Model model) {
-        final User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        final User recipient = userService.getUser(wallMessageDto.getRecipientId());
+                      @AuthenticationPrincipal User currentUser) {
+        User author = userService.getUser(currentUser.getId());
+        User recipient = userService.getUser(wallMessageDto.getRecipientId());
         wallMessageService.addPost(author, recipient, wallMessageDto.getText());
         return "redirect:/" + recipient.getId();
-    }
-
-    @PostMapping("/upload-avatar")
-    public String upload(@RequestParam(name = "avatarURL") MultipartFile multipartFile) throws IOException {
-        final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        userService.addAvatar(user, multipartFile);
-        return "redirect:/";
     }
 
     @PostMapping("/upload")
     public String uploadPhoto(@RequestParam(name = "photos") MultipartFile multipartFile,
                               @AuthenticationPrincipal User currentUser) throws IOException {
         User user = userService.getUser(currentUser.getId());
-        photoService.uploadPhoto(user,multipartFile);
+        photoService.uploadPhoto(user, multipartFile);
         return "redirect:/";
-    }
-
-    @GetMapping("/subscribe/{user}")
-    public String subscribe(@AuthenticationPrincipal User currentUser,
-                            @PathVariable User user){
-        userService.subscribe(currentUser, user);
-        return "redirect:/" + user.getId();
-    }
-
-    @GetMapping("/unsubscribe/{user}")
-    public String unsubscribe(@AuthenticationPrincipal User currentUser,
-                              @PathVariable User user){
-        userService.unubscribe(currentUser, user);
-        return "redirect:/" + user.getId();
-    }
-
-    @GetMapping("/{type}/{user}/list")
-    public String userList(@AuthenticationPrincipal User currentUser,
-                           @PathVariable User user,
-                           @PathVariable String type,
-                           Model model){
-        model.addAttribute("user", user);
-        model.addAttribute("type", type);
-        model.addAttribute("currentUser", currentUser);
-        if ("subscriptions".equals(type)){
-            model.addAttribute("subscriptions", user.getSubscription());
-        }else {
-            model.addAttribute("subscriptions", user.getSubscribers());
-        }
-        return "subscriptions";
-    }
-
-    @GetMapping("{user}/{post}/like")
-    public String like(@AuthenticationPrincipal User currnetUser,
-                       @PathVariable WallMessage post,
-                       @PathVariable User user){
-        wallMessageService.like(currnetUser, post);
-        return "redirect:/" + user.getId();
     }
 
     @GetMapping("{user}/{photo}/islike")
     public String likes(@AuthenticationPrincipal User currnetUser,
                         @PathVariable Photo photo,
-                        @PathVariable User user){
+                        @PathVariable User user) {
         photoService.like(currnetUser, photo);
         return "redirect:/" + user.getId();
     }
-
 
 }

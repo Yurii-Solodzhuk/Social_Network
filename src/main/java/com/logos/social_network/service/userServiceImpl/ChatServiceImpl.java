@@ -1,9 +1,9 @@
 package com.logos.social_network.service.userServiceImpl;
 
+import com.logos.social_network.dao.ChatDAO;
 import com.logos.social_network.entity.Chat;
 import com.logos.social_network.entity.Message;
 import com.logos.social_network.entity.User;
-import com.logos.social_network.dao.ChatDAO;
 import com.logos.social_network.repository.ChatRepository;
 import com.logos.social_network.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,7 @@ public class ChatServiceImpl implements ChatService {
         Chat chat = new Chat(members);
         author.setChats(Arrays.asList(chat));
         recipient.setChats(Arrays.asList(chat));
-        Chat save = chatRepository.save(chat);
-        return save;
+        return chatRepository.save(chat);
     }
 
     @Override

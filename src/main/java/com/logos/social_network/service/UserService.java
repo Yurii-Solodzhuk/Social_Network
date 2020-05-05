@@ -1,7 +1,6 @@
 package com.logos.social_network.service;
 
 import com.logos.social_network.dto.UserDto;
-import com.logos.social_network.entity.Chat;
 import com.logos.social_network.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +17,6 @@ public interface UserService {
     void unubscribe(User currentUser, User user);
     List<User> getAllUsers();
     boolean deleteUser(Integer userId);
-    void changePassword(User user, String password, String repeatPassword);
-
+    void changePassword(User user, UserDto userDto);
+    void editUserFields(User user, UserDto userDto);
 }

@@ -1,10 +1,5 @@
 package com.logos.social_network.dto;
 
-import com.logos.social_network.entity.Message;
-import lombok.Getter;
-import lombok.Setter;
-
-
 public class MessageDto {
     private Integer chatId;
     private String text;

@@ -4,6 +4,7 @@ import com.logos.social_network.entity.User;
 import com.logos.social_network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,9 @@ public class AdminController {
     private UserService userService;
 
     @GetMapping("/admin")
-    public String userList(Model model){
+    public String userList(@AuthenticationPrincipal User currentUser, Model model){
         List<User> users = userService.getAllUsers();
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("users", users);
         return "adminPage";
     }

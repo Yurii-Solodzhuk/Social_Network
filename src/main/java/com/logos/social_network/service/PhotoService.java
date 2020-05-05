@@ -4,7 +4,6 @@ import com.logos.social_network.entity.Photo;
 import com.logos.social_network.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 
 public interface PhotoService {

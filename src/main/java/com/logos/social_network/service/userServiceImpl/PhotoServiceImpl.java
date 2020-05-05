@@ -2,7 +2,6 @@ package com.logos.social_network.service.userServiceImpl;
 
 import com.logos.social_network.entity.Photo;
 import com.logos.social_network.entity.User;
-import com.logos.social_network.entity.WallMessage;
 import com.logos.social_network.repository.PhotoRepository;
 import com.logos.social_network.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;

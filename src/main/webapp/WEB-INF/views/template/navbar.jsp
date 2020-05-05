@@ -41,7 +41,7 @@
                     <a class="dropdown-item" href="/settings">Settings</a>
                     <div class="dropdown-divider"></div>
                     <form:form action="/logout" method="post">
-                        <input type="submit"  class="dropdown-item" value="Sing Out"/>
+                        <input type="submit" class="dropdown-item" value="Sing Out"/>
                     </form:form>
                 </div>
             </li>

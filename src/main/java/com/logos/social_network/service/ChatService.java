@@ -3,8 +3,6 @@ package com.logos.social_network.service;
 import com.logos.social_network.entity.Chat;
 import com.logos.social_network.entity.User;
 
-import java.util.List;
-
 
 public interface ChatService {
     Integer getChat(User author, User recipient);

@@ -3,7 +3,6 @@ package com.logos.social_network.service.userServiceImpl;
 import com.logos.social_network.dto.UserDto;
 import com.logos.social_network.entity.Role;
 import com.logos.social_network.entity.User;
-import com.logos.social_network.mapper.Mapper;
 import com.logos.social_network.repository.UserRepository;
 import com.logos.social_network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
-
-    @Autowired
-    private Mapper mapper;
 
 
     public User getUser(Integer id) {
@@ -113,7 +109,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void addAvatar(User user, MultipartFile file) throws IOException {
 
-        if (file != null&&!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
@@ -128,10 +124,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void changePassword(User user, String password, String repeatPassword) {
-        if (password.equals(repeatPassword))
-        user.setPassword(encoder.encode(password));
+    public void changePassword(User user, UserDto userDto) {
+        if (userDto.getPassword().equals(userDto.getRepeatPassword()) && !userDto.getPassword().isEmpty())
+            user.setPassword(encoder.encode(userDto.getPassword()));
         userRepository.save(user);
     }
+
+    @Override
+    public void editUserFields(User user, UserDto userDto) {
+        if (!userDto.getCity().isEmpty())user.setCity(userDto.getCity());
+        if (!userDto.getWork().isEmpty())user.setWork(userDto.getWork());
+        if (!userDto.getBithday().isEmpty())user.setBithday(userDto.getBithday());
+        if (!userDto.getInfo().isEmpty())user.setInfo(userDto.getInfo());
+        userRepository.save(user);
+    }
+
 }
 

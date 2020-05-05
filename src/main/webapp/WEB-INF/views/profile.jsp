@@ -6,7 +6,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://kit.fontawesome.com/f9e982cf9d.js" crossorigin="anonymous"></script>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -20,16 +19,6 @@
         <div class="col-lg-4">
             <div class="card" style="width: 15rem;">
                 <img src="/img/${user.avatarURL}" class="card-img-top" alt="Avatar">
-<%--                <c:if test="${isCurrentUser}">--%>
-<%--                    <div class="card-body" style="background-color: #dddddd">--%>
-<%--                        <form:form method="post" action="/upload-avatar" enctype="multipart/form-data">--%>
-<%--                            <input type="file" name="avatarURL" id="avatarURL" style="width: 112px">--%>
-<%--                            <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">--%>
-<%--                                Upload--%>
-<%--                            </button>--%>
-<%--                        </form:form>--%>
-<%--                    </div>--%>
-<%--                </c:if>--%>
             </div>
         </div>
 
@@ -86,16 +75,16 @@
         <div class="row mt-2">
             <div class="col-lg-3"></div>
             <div class="col-lg-3">
-                <div>City: <br>
-                    Email: ${user.email}<br>
-                    Phone Number: ${user.phoneNumber}</div>
+                <div><strong>City:</strong> ${user.city}<br>
+                    <strong>Email:</strong> ${user.email}<br>
+                    <strong>Phone Number:</strong> ${user.phoneNumber}</div>
             </div>
             <div class="col-lg-3"></div>
             <div class="col-lg-3">
                 <div>
-                    Work: <br>
-                    B-Day: <br>
-                    About me:
+                    <strong>Work:</strong> ${user.work}<br>
+                    <strong>B-Day:</strong> ${user.bithday}<br>
+                    <strong>About me:</strong>${user.info}
                 </div>
             </div>
         </div>
@@ -105,12 +94,11 @@
     <%--    User photos--%>
     <div class="container mt-4" style="background-color: whitesmoke">
         <div class="row ml-5" style="font-size: 20px;"><strong>Photos</strong></div>
-        <div>
-
+        <div class="row ml-3">
             <div class="card-deck">
                 <c:forEach items="${photos}" var="photo">
                     <div class="card">
-                        <img src="/img/${photo.photoURL}" style="width: 8rem; height: 8rem"  alt="Photo">
+                        <img src="/img/${photo.photoURL}" style="width: 7.5rem; height: 7.5rem" alt="Photo">
                         <a class="col align-self-center" href="/${user.id}/${photo.id}/islike">
                             <c:if test="${photo.meLiked}">
                                 <i class="fas fa-heart"></i>
@@ -124,24 +112,20 @@
                 </c:forEach>
             </div>
         </div>
-        <c:if test="${isCurrentUser}">
-
-            <form:form method="post" action="/upload" enctype="multipart/form-data">
-                <input type="file" name="photos" id="photoURL" style="width: 112px">
-                <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
-                    Upload
-                </button>
-            </form:form>
-
-        </c:if>
+        <div class="row mt-2">
+            <div class="col-lg-9"></div>
+            <div class="col-lg-3">
+                <c:if test="${isCurrentUser}">
+                    <form:form method="post" action="/upload" enctype="multipart/form-data">
+                        <input type="file" name="photos" id="photoURL">
+                        <button type="submit" class="btn btn-info" style="background-color: #04B4AE; color: white">
+                            Upload
+                        </button>
+                    </form:form>
+                </c:if>
+            </div>
+        </div>
     </div>
-
-
-<%--    <div class="card">--%>
-<%--        <img src="/img/${photo.photoURL}" class="card-img-top" alt="Photo">--%>
-<%--        <div class="card-body">--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
 
     <%--User posts--%>
@@ -197,12 +181,6 @@
             </ul>
         </div>
     </div>
-
-
-    <%@include file="template/footer.jsp" %>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
